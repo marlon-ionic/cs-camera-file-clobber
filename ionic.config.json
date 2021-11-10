@@ -1,0 +1,7 @@
+{
+  "name": "CameraCordovaFileClobber",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

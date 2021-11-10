@@ -1,27 +1,34 @@
-# CsCameraFileClobber
+# Capacitor Camera / Cordova File Plugin Sample Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+This project demonstrates an approach to retain access to the native [File Web API](https://developer.mozilla.org/en-US/docs/Web/API/File) when using the [cordova-file-plugin](https://github.com/apache/cordova-plugin-file).
 
-## Development server
+## Details
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Cordova plugins have the ability to 'clobber' a namespace under `window`. In this case, the cordova-plugin-file clobber `File`, which is an API provided by the browser. This sample project provides a solution when the user needs access to browsers's `File` API, while using the Cordova File Plugin. This is solution is based on a [Github comment](https://github.com/apache/cordova-plugin-file/issues/453#issuecomment-771689178) related to this issue.
 
-## Code scaffolding
+## Instructions
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To implement in your project:
 
-## Build
+1. In your index.html file, add the follow code as the first child of your body tag:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```html
+<script type="text/javascript">window.OriginalFile = window.File;</script>
+```
 
-## Running unit tests
+1. This creates a reference called OriginalFile that can be referenced in your Angular code.
+2. Anywhere you need to use the `OriginalFile` object, you'll need add the following statement (preferrable just below your import statements):
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+declare var OriginalFile: any;
+```
 
-## Running end-to-end tests
+## Usage Example
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+To instantiate a new File:  
 
-## Further help
+```ts
+const file = new OriginalFile([blob], 'myNewImage.jpg', {type: 'image/jpeg'});
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This could be passed into any method that's expecting a web `File` object

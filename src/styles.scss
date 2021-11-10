@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding:
+    env(safe-area-inset-top, 20px)
+    env(safe-area-inset-right, 20px)
+    env(safe-area-inset-bottom, 20px)
+    env(safe-area-inset-left, 20px);
+
+    @supports(padding: max(0px)) {
+      padding-top: max(20px, env(safe-area-inset-top));
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-left: max(12px, env(safe-area-inset-left));
+      padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+}
+
